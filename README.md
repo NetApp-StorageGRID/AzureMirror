@@ -171,4 +171,4 @@ They share the same set of configuration parameters.
 	--size size --count 1000 > managekits.log
 	~~~~
 ##Questions?##
-Please contact @netapp-ng-group for feedbacks and questions. 
+While this is not a product from NetApp, we do welcome feedbacks. Please contact ng-cloud-management-kits@netapp.com for feedbacks and questions. 
