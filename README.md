@@ -24,10 +24,6 @@ to replicate or migrate objects between a StorageGrid system and Microsoft Azure
 * azure-storage-5.0.0.jar  
 	Available at: https://github.com/Azure/azure-storage-java
 
-## How to get the source code? ##
-~~~~
-$ git clone ssh://git@ngage.netapp.com:7999/atg-bb/managekits.git
-~~~~
 
 ## How to compile it? ##
 ~~~~
