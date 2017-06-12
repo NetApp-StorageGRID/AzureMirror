@@ -166,6 +166,6 @@ They share the same set of configuration parameters.
 	--class FillBucket  ~/cloud-management-kits_2.11-0.2.jar --bucket bucket \
 	--size size --count 1000 > managekits.log
 	~~~~
-	
-##Questions?##
+
+## Questions? ##
 While this is not a product from NetApp, we do welcome feedbacks. Please contact ng-cloud-management-kits@netapp.com for feedbacks and questions. 
