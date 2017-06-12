@@ -35,7 +35,7 @@ $ ls target/scala-2.11/cloud-management-kits_2.11-0.2.jar
 The jar file is ready. 
 
 ## How to run it? ##
-1. You need a spark cluster up and running, either at Azure, S3 or your own data center. 
+1. You need a spark cluster up and running, either at Microsoft Azure, AWS EC2 or your own data center. 
 2. Get the two Java SDKs (AWS Java SDK and Azure Storage Java SDK). 
     * AWS Java SDK. We can download using the following command.  
 	~~~~
@@ -166,5 +166,6 @@ They share the same set of configuration parameters.
 	--class FillBucket  ~/cloud-management-kits_2.11-0.2.jar --bucket bucket \
 	--size size --count 1000 > managekits.log
 	~~~~
+	
 ##Questions?##
 While this is not a product from NetApp, we do welcome feedbacks. Please contact ng-cloud-management-kits@netapp.com for feedbacks and questions. 
