@@ -1,4 +1,4 @@
-# Cloud Storage Management Kits #
+# mantis - cloud storage MANagemenT kItS #
 
 This software provides several functions for managing 
 large-scale cloud object store, leveraging Apache Spark. It uses AWS Java SDK and Azure
