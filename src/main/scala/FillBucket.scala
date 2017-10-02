@@ -20,6 +20,7 @@ import prefix._
  *    --size size, object size
  *    --count count, the number of objects to create
  *    --prefix [numeric|letters|hex|alphanumerics|all], specify which prefix set to use
+ *    --partitions partitions, the number of partitions (tasks) 
  *
  *  It first generates the prefix list, then determines how many objects to create for each prefix (rounded up) 
  *  and finally calls fill() to create objects for each prefix. 
@@ -71,12 +72,14 @@ object FillBucket {
 		var size: Option[Int] = None
 		var count: Option[Int] = None
 		var prefix: Option[String] = Some("all")
+		var partitions: Option[Int] = None
 
 		// Check for --originBucket and --destBucket parameters
 		args.sliding(2, 1).toList.collect {
 			case Array("--bucket", origin: String) => bucket = Some(origin)
 			case Array("--size", s: String) => size = Some(s.toInt)
 			case Array("--count", c: String) => count = Some(c.toInt)
+			case Array("--partitions", p: String) => partitions = Some(p.toInt)
 			case Array("--prefix", p: String) => prefix = Some(p)
 		}
 
@@ -99,15 +102,20 @@ object FillBucket {
 		val prefixes = PrefixGenerator.generate(prefix.get, 2)
 		// println("Total number of prefixes: " + prefixes.length)
 
-		val prefixRDD = sc.parallelize(prefixes, prefixes.length)
+		// if partitions is not set, set it to the number of prefixes.
+		if (partitions.isEmpty)
+			partitions = Some(prefixes.length)
+
+		val prefixRDD = sc.parallelize(prefixes, partitions.get)
 		
 		val countPerPrefix = (count.get + prefixes.length-1)/prefixes.length
-		println("Number of prefixes = " + prefixes.length + ", countPerPrefix = " + countPerPrefix)
+		println("Number of prefixes = " + prefixes.length + ", countPerPrefix = " + countPerPrefix 
+			+ ", partitions = " + prefixRDD.partitions.size)
 
 		// Get objects in the bucket 
 		val ObjsRDD = prefixRDD.flatMap(p => fill(emConf, p, size.get, countPerPrefix))
 		val totalObjects = ObjsRDD.count
-		println(f"Objects created: $totalObjects")
+		println("Objects created = " + totalObjects + ", partitions = " + ObjsRDD.partitions.size)
 
 		runtime = (System.currentTimeMillis - starttime)/1000.0
 		println("Exit from ListBucket: runtime = %.2f minutes, throughput = %d objects/sec"
