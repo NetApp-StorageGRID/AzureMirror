@@ -14,7 +14,8 @@ import prefix._
  *  Input parameters:
  *     --bucket bucket, the bucket to list
  *     --summary, show summary information (total number of objects)
- *     --prefix [numeric|letters|hex|alphanumerics|all], specify which prefix set to use
+ *     --prefix [numeric|letters|hex|alphanumerics|nonnumeric|all], specify which prefix set to use
+ *     --partitions partitions, the number of partitions (tasks)
  */
 object ListBucket {
 	/* list objects for a particular prefix. */
@@ -30,13 +31,16 @@ object ListBucket {
 
 		var bucket: Option[String] = None
 		var prefix: Option[String] = Some("all")
+		var partitions: Option[Int] = None
 		var summary = false
 
 		// Check for --bucket parameter
 		args.sliding(2, 1).toList.collect {
 			case Array("--bucket", origin: String) => bucket = Some(origin)
 			case Array("--prefix", p: String) => prefix = Some(p)
+			case Array("--partitions", p: String) => partitions = Some(p.toInt)
 		}
+
 		// Check for --summary parameter
 		args.sliding(1, 1).toList.collect {
 			case Array("--summary") => summary = true
@@ -54,15 +58,18 @@ object ListBucket {
 		println(emConf)
 	
 		// start to do real stuff
-		val prefixes = PrefixGenerator.generate(prefix.get, 1)
-		// println("Total number of prefixes: " + prefixes.length)
+		val prefixes = PrefixGenerator.generate(prefix.get, 2)
+		println("Total number of prefixes: " + prefixes.length)
 		
-		val prefixRDD = sc.parallelize(prefixes, prefixes.length)
+		if (partitions.isEmpty)
+			partitions = Some(prefixes.length)
+
+		val prefixRDD = sc.parallelize(prefixes, partitions.get)
 		
 		// Get objects in the bucket 
 		val ObjsRDD = prefixRDD.flatMap(p => list(emConf, p))
 		val totalObjects = ObjsRDD.count
-		println(f"Objects in bucket: $totalObjects")
+		println("Objects in bucket = " + totalObjects + ", partitions = " + ObjsRDD.partitions.size)
 		
 		// print out the list of objects
 		if (summary == false) {
