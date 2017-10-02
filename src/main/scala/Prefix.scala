@@ -19,18 +19,20 @@ package object PrefixGenerator {
 		val hexletters = ('a' to 'f').toList.map(_.toString)
 		val specials = List('!', '-', '_', '.', '*', ''', '(', ')').map(_.toString)
 		
-		var prefixes = style.toLowerCase match {
+		var prefixset = style.toLowerCase match {
 			case "numeric" => numbers
 			case "letters" => letters
 			case "hex" => (numbers ++ hexletters)
 			case "alphanumerics" => (numbers ++ letters)
 			case "all" => (numbers ++ letters ++ specials)
+			case "nonnumeric" => (letters ++ specials)
 			case _ => throw new IllegalArgumentException(f"prefix type '$style' is not supported! Use one of [numeric|letters|hex|alphanumerics|all].")
 		}
 		
+		var prefixes = prefixset
 		// append for (prefixLen-1) times, to generate prefixes at prefixLen 
 		for(i <- 2 to prefixLen) {
-			prefixes = prefixes.flatMap(a => prefixes.map(b => b+a))	
+			prefixes = prefixset.flatMap(a => prefixes.map(b => b+a))	
 		}
 		prefixes
 	}
