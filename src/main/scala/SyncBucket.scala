@@ -32,6 +32,7 @@ class CMConf(var origin: CloudEndPoint, var originBucket: String, var originAcco
  *     --delete, delete objects from the origin bucket after synchronization
  *     --prefix [numeric|letters|hex|alphanumerics|all], specify which prefix set to use
  *     --dryrun, skip the step of copying objects 
+ *     --partitions partitions, the number of partitions (tasks)
  *     --verbose, turn on verbose output
  *
  *	This scala program implements the function to synchronize between two buckets.
@@ -89,6 +90,7 @@ object SyncBucket {
 		var originBucket: Option[String] = None
 		var destBucket: Option[String] = None
 		var prefix: Option[String] = Some("all")
+		var partitions: Option[Int] = None
 		var delete = false
 		var verbose = 0
 		var dryrun = false
@@ -98,6 +100,7 @@ object SyncBucket {
 			case Array("--originBucket", origin: String) => originBucket = Some(origin)
 			case Array("--destBucket", destination: String) => destBucket = Some(destination)
 			case Array("--prefix", p: String) => prefix = Some(p)
+			case Array("--partitions", p: String) => partitions = Some(p.toInt)
 		}
 		// Check for --delete and --verbose parameters
 		args.sliding(1, 1).toList.collect {
@@ -139,9 +142,12 @@ object SyncBucket {
 	
 		// start to do real stuff
 		val prefixes = PrefixGenerator.generate(prefix.get, 2)
-		// println("Total number of prefixes: " + prefixes.length)
+		println("Total number of prefixes: " + prefixes.length)
 		
-		val prefixRDD = sc.parallelize(prefixes, prefixes.length)
+		if (partitions.isEmpty)
+			partitions = Some(prefixes.length)
+
+		val prefixRDD = sc.parallelize(prefixes, partitions.get)
 		
 		// Get objects in origin cloud 
 		val originObjsRDD = prefixRDD.flatMap(p => list("origin", cmConf, p))
@@ -164,7 +170,7 @@ object SyncBucket {
 		if (!dryrun) {
 			val results = missObjsRDD.map(o => copy(cmConf, o))
 			totalObjects = results.count
-			println(f"Objects processed: $totalObjects")
+			println("Objects processed = " + totalObjects + ", partitions = " + missObjsRDD.partitions.size)
 		}
 
 		// Delete objects in origin cloud if needed
