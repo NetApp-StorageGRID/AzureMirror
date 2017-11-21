@@ -4,37 +4,20 @@
 ## Software ##
 * Spark-2.1.0-bin-hadoop2.7
 * aws-java-sdk-1.11.84.jar  
-	Available at: https://aws.amazon.com/sdk-for-java/
-* azure-storage-5.0.0.jar  
-	Available at: https://github.com/Azure/azure-storage-java
-
-
-## How to compile it? ##
-~~~~
-$ git clone git@github.com:NTAP/magi.git
-$ cd magi
-$ sbt package
-$ ls target/scala-2.11/magi_2.11-0.2.jar
-~~~~
-
-The jar file is ready. 
+	Available at: https://github.com/NTAP/magi/releases/download/1.0/aws-java-sdk-1.11.84.jar  
+* magi_2.11-1.0.jar  
+	Available at: https://github.com/NTAP/magi/releases/download/1.0/magi_2.11-1.0.jar
 
 ## How to run it? ##
-1. You need a spark cluster up and running, either at Microsoft Azure, AWS EC2 or your own data center. 
-2. Get the AWS Java SDKs . 
-    * AWS Java SDK. We can download using the following command.  
+1. You need a spark cluster up and running, either at Microsoft Azure, AWS EC2 or your own data center.
+2. Download aws Java SDK and magi jar files.   
+3. Install the aws Java SDK jar in your spark cluster (assume spark is installed at /usr/spark.).
 	~~~~
-	$ wget https://sdk-for-java.amazonwebservices.com/latest/aws-java-sdk.zip
-	$ unzip aws-java-sdk-1.11.84.zip
-	$ ls aws-java-sdk-1.11.84/lib/aws-java-sdk-1.11.84.jar
-	~~~~
-3. Install the above jars in your spark cluster (assume spark is installed at /usr/spark.).
-	~~~~
-	$ scp aws-java-sdk-1.11.84/lib/aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
+	$ scp aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
 	~~~~
 4. Copy the magi jar file to the spark master node.
 	~~~~
-	$ scp target/scala-2.11/magi_2.11-1.0.jar spark-master-node:~/
+	$ scp magi_2.11-1.0.jar spark-master-node:~/
 	~~~~
 
 ### Bucket synchronization ### 
