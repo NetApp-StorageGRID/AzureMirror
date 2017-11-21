@@ -14,7 +14,7 @@
 $ git clone git@github.com:NTAP/magi.git
 $ cd magi
 $ sbt package
-$ ls target/scala-2.11/cloud-management-kits_2.11-0.2.jar
+$ ls target/scala-2.11/magi_2.11-0.2.jar
 ~~~~
 
 The jar file is ready. 
