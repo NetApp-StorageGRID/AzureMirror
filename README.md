@@ -27,9 +27,10 @@ to replicate or migrate objects between a StorageGrid system and Microsoft Azure
 
 ## How to compile it? ##
 ~~~~
-$ cd managekits
+$ git clone git@github.com:NTAP/magi.git
+$ cd magi
 $ sbt package
-$ ls target/scala-2.11/cloud-management-kits_2.11-0.2.jar
+$ ls target/scala-2.11/magi_2.11-0.2.jar
 ~~~~
 
 The jar file is ready. 
@@ -55,7 +56,11 @@ The jar file is ready.
 	$ scp aws-java-sdk-1.11.84/lib/aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
 	$ scp azure-storage-java/target/azure-storage-5.0.0.jar each-spark-node:/usr/spark/jars 
 	~~~~
-4. Copy cloud-management-kits jar file to the spark master node.
+4. Copy the magi jar file to the spark master node.
+	~~~~
+	$ scp target/scala-2.11/magi_2.11-1.0.jar spark-master-node:~/
+	~~~~
+
 
 ### Bucket synchronization ### 
 * Function: replicate/synchronize objects between two buckets sitting in S3, Azure or NetApp StorageGrid.
@@ -94,8 +99,8 @@ The jar file is ready.
 2. Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class SyncBucket  ~/cloud-management-kits_2.11-0.2.jar --originBucket originbucket \
-	--destBucket destinationBucket > managekits.log
+	--class SyncBucket  ~/magi_2.11-0.2.jar --originBucket originbucket \
+	--destBucket destinationBucket > bucket-sync.log
 	~~~~
 
 ### Utility Functions ###
@@ -136,7 +141,7 @@ They share the same set of configuration parameters.
 * Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class EmptyBucket  ~/cloud-management-kits_2.11-0.2.jar --bucket bucket > managekits.log
+	--class EmptyBucket  ~/magi_2.11-0.2.jar --bucket bucket > bucket-empty.log
 	~~~~
 
 #### List a bucket ####
@@ -149,7 +154,7 @@ They share the same set of configuration parameters.
 * Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class ListBucket  ~/cloud-management-kits_2.11-0.2.jar --bucket bucket > managekits.log
+	--class ListBucket  ~/magi_2.11-0.2.jar --bucket bucket > bucket-list.log
 	~~~~
 
 #### Fill a bucket ####
@@ -163,8 +168,8 @@ They share the same set of configuration parameters.
 * Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class FillBucket  ~/cloud-management-kits_2.11-0.2.jar --bucket bucket \
-	--size size --count 1000 > managekits.log
+	--class FillBucket  ~/magi_2.11-0.2.jar --bucket bucket \
+	--size size --count 1000 > bucket-fill.log
 	~~~~
 
 ## Questions? ##
