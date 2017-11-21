@@ -1,4 +1,4 @@
-name := "Cloud Management Kits"
+name := "magi"
 version := "1.0"
 scalaVersion := "2.11.7"
 
