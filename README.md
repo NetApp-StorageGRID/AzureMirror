@@ -20,12 +20,16 @@ to replicate or migrate objects between a StorageGrid system and Microsoft Azure
 ## Software ##
 * Spark-2.1.0-bin-hadoop2.7
 * aws-java-sdk-1.11.84.jar  
-	Available at: https://aws.amazon.com/sdk-for-java/
+	Available at: https://github.com/NTAP/magi/releases/download/1.0/aws-java-sdk-1.11.84.jar
+	More recent versions are available at: https://aws.amazon.com/sdk-for-java/
 * azure-storage-5.0.0.jar  
-	Available at: https://github.com/Azure/azure-storage-java
+	Available at: https://github.com/NTAP/magi/releases/download/1.0/azure-storage-5.0.0.jar
+	More recent versions are available at: https://github.com/Azure/azure-storage-java
+* magi_2.11-1.0.jar  
+	Available at: https://github.com/NTAP/magi/releases/download/1.0/magi_2.11-1.0.jar
 
-
-## How to compile it? ##
+## How to compile from source code? ##
+1. Compile magi
 ~~~~
 $ git clone git@github.com:NTAP/magi.git
 $ cd magi
@@ -37,26 +41,12 @@ The jar file is ready.
 
 ## How to run it? ##
 1. You need a spark cluster up and running, either at Microsoft Azure, AWS EC2 or your own data center. 
-2. Get the two Java SDKs (AWS Java SDK and Azure Storage Java SDK). 
-    * AWS Java SDK. We can download using the following command.  
+2. Install the two Java SDK jars in your spark cluster (assume spark is installed at /usr/spark.).
 	~~~~
-	$ wget https://sdk-for-java.amazonwebservices.com/latest/aws-java-sdk.zip
-	$ unzip aws-java-sdk-1.11.84.zip
-	$ ls aws-java-sdk-1.11.84/lib/aws-java-sdk-1.11.84.jar
+	$ scp aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
+	$ scp azure-storage-5.0.0.jar each-spark-node:/usr/spark/jars 
 	~~~~
-    * Azure Storage Java SDK.  Download with git. Compile it and the jar file is in the 'target' dir.
-	~~~~
-	$ git clone git@github.com:Azure/azure-storage-java.git  
-	$ cd azure-storage-java  
-	$ mvn package -DskipTests  
-	$ ls target/azure-storage-5.0.0.jar  
-	~~~~
-3. Install the above two jars in your spark cluster (assume spark is installed at /usr/spark.).
-	~~~~
-	$ scp aws-java-sdk-1.11.84/lib/aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
-	$ scp azure-storage-java/target/azure-storage-5.0.0.jar each-spark-node:/usr/spark/jars 
-	~~~~
-4. Copy the magi jar file to the spark master node.
+3. Copy the magi jar file to the spark master node.
 	~~~~
 	$ scp target/scala-2.11/magi_2.11-1.0.jar spark-master-node:~/
 	~~~~
