@@ -20,10 +20,10 @@ to replicate or migrate objects between a StorageGrid system and Microsoft Azure
 ## Software ##
 * Spark-2.1.0-bin-hadoop2.7
 * aws-java-sdk-1.11.84.jar  
-	Available at: https://github.com/NTAP/magi/releases/download/1.0/aws-java-sdk-1.11.84.jar
+	Available at: https://github.com/NTAP/magi/releases/download/1.0/aws-java-sdk-1.11.84.jar  
 	More recent versions are available at: https://aws.amazon.com/sdk-for-java/
 * azure-storage-5.0.0.jar  
-	Available at: https://github.com/NTAP/magi/releases/download/1.0/azure-storage-5.0.0.jar
+	Available at: https://github.com/NTAP/magi/releases/download/1.0/azure-storage-5.0.0.jar  
 	More recent versions are available at: https://github.com/Azure/azure-storage-java
 * magi_2.11-1.0.jar  
 	Available at: https://github.com/NTAP/magi/releases/download/1.0/magi_2.11-1.0.jar
