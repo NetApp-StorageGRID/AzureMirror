@@ -10,7 +10,7 @@
 
 ## How to run it? ##
 1. You need a spark cluster up and running, either at Microsoft Azure, AWS EC2 or your own data center.
-2. Download aws Java SDK and magi jar files.   
+2. Download aws Java SDK and magi jar files from the links provided above.   
 3. Install the aws Java SDK jar in your spark cluster (assume spark is installed at /usr/spark.).
 	~~~~
 	$ scp aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
