@@ -3,9 +3,9 @@
 
 ## Software ##
 * Create an EMR-Spark cluster  
-	emr-5.12.0 with Spark 2.2.1
+	* emr-5.12.0 with Spark 2.2.1
 * magi_2.11-1.0.jar  
-	Available at: https://github.com/NTAP/magi/releases/download/1.0/magi_2.11-1.0.jar
+	* Available at: https://github.com/NTAP/magi/releases/download/1.0/magi_2.11-1.0.jar
 
 ## How to run it? ##
 2. Download the magi jar files from the links provided above.   
