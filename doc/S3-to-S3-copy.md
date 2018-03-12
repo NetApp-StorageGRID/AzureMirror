@@ -2,19 +2,13 @@
 
 
 ## Software ##
-* Spark-2.1.0-bin-hadoop2.7
-* aws-java-sdk-1.11.84.jar  
-	Available at: https://github.com/NTAP/magi/releases/download/1.0/aws-java-sdk-1.11.84.jar  
+* Create an EMR-Spark cluster
+	emr-5.12.0 with Spark 2.2.1
 * magi_2.11-1.0.jar  
 	Available at: https://github.com/NTAP/magi/releases/download/1.0/magi_2.11-1.0.jar
 
 ## How to run it? ##
-1. You need a spark cluster up and running, either at Microsoft Azure, AWS EC2 or your own data center.
-2. Download aws Java SDK and magi jar files from the links provided above.   
-3. Install the aws Java SDK jar in your spark cluster (assume spark is installed at /usr/spark.).
-	~~~~
-	$ scp aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
-	~~~~
+2. Download the magi jar files from the links provided above.   
 4. Copy the magi jar file to the spark master node.
 	~~~~
 	$ scp magi_2.11-1.0.jar spark-master-node:~/
@@ -50,7 +44,7 @@
 	
 2. Submit the job from the spark master node
 	~~~~
-	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
+	$ /usr/spark/bin/spark-submit --master yarn \
 	--class SyncBucket  ~/magi_2.11-1.0.jar --originBucket originbucket \
 	--destBucket destinationBucket > bucket-sync.log
 	~~~~
@@ -77,7 +71,7 @@ They share the same set of configuration parameters.
 
 * Submit the job
 	~~~~
-	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
+	$ /usr/spark/bin/spark-submit --master yarn \
 	--class EmptyBucket  ~/magi_2.11-0.2.jar --bucket bucket > bucket-empty.log
 	~~~~
 
@@ -90,7 +84,7 @@ They share the same set of configuration parameters.
 
 * Submit the job
 	~~~~
-	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
+	$ /usr/spark/bin/spark-submit --master yarn \
 	--class ListBucket  ~/magi_2.11-0.2.jar --bucket bucket > bucket-list.log
 	~~~~
 
@@ -104,7 +98,7 @@ They share the same set of configuration parameters.
 
 * Submit the job
 	~~~~
-	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
+	$ /usr/spark/bin/spark-submit --master yarn \
 	--class FillBucket  ~/magi_2.11-0.2.jar --bucket bucket \
 	--size size --count 1000 > bucket-fill.log
 	~~~~
