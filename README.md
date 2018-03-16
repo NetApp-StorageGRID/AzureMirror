@@ -163,4 +163,4 @@ They share the same set of configuration parameters.
 	~~~~
 
 ## Questions? ##
-While this is not a product from NetApp, we do welcome feedbacks. Please contact ng-cloud-management-kits@netapp.com for feedbacks and questions. 
+While this is not a product from NetApp, we do welcome feedbacks. Please contact ng-magi@netapp.com for feedbacks and questions. 
