@@ -31,7 +31,7 @@ to replicate or migrate objects between a StorageGrid system and Microsoft Azure
 ## How to compile from source code? ##
 1. Compile magi
 ~~~~
-$ git clone git@github.com:NTAP/magi.git
+$ git clone https://github.com/NTAP/magi.git  
 $ cd magi
 $ sbt package
 $ ls target/scala-2.11/magi_2.11-0.2.jar
