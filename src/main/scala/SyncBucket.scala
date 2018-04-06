@@ -69,7 +69,7 @@ object SyncBucket {
 	def copy(cmConf: CMConf, obj: String) = {
 		val srcCredentail = new Credential(cmConf.originAccount, cmConf.originSecretKey)
 		val origin = GetStorageClient.get(cmConf.origin, srcCredentail)
-		val instream: InputStream = origin.get(cmConf.originBucket, obj)
+		var (instream, metaData) = origin.get(cmConf.originBucket, obj)
 
 		val destCredential = new Credential(cmConf.destAccount, cmConf.destSecretKey)
 		val destination = GetStorageClient.get(cmConf.destination, destCredential)

@@ -50,7 +50,7 @@ class Credential(var account: String, var secretKey: String) {
  */
 abstract class StorageClient {
 	def list(bucket: String, prefix: String) : List[String]
-	def get(bucket: String, objID: String) : InputStream
+	def get(bucket: String, objID: String) : (InputStream, java.util.Map[String,String])
 	def put(bucket: String, objID: String, objValue: InputStream)
 	def del(bucket: String, objID: String)
 }
@@ -93,10 +93,11 @@ class S3Client(var credential: Credential, var region: String) extends StorageCl
 		objects.toList
 	}
 
-	def get(bucket: String, objID: String) : InputStream = {
+	def get(bucket: String, objID: String) : (InputStream, java.util.Map[String,String]) = {
 		val obj: S3Object = s3Client.getObject(new GetObjectRequest(bucket, objID))
 		val objectContent: InputStream = obj.getObjectContent
-		objectContent
+		val metaData = obj.getObjectMetadata().getUserMetadata()
+		(objectContent, metaData)
 	}
 
 	def put(bucket: String, objID: String, objectContent: InputStream) = {
@@ -130,13 +131,15 @@ class AzureClient(var credential: Credential) extends StorageClient {
 		blobIDs
 	}
 
-	def get(bucket: String, objID: String) = {
+	def get(bucket: String, objID: String) : (InputStream, java.util.Map[String,String]) = {
 		val containerClient = blobClient.getContainerReference(bucket)
 		val blob = containerClient.getBlockBlobReference(objID)
 		val outstream = new ByteArrayOutputStream()
 		blob.download(outstream)
+		blob.downloadAttributes()
 		val objectContent = new ByteArrayInputStream(outstream.toByteArray)
-		objectContent
+		val metaData = blob.getMetadata()
+		(objectContent, metaData)
 	}
 
 	def put(bucket: String, objID: String, objectContent: InputStream) = {
