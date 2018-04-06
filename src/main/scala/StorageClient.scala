@@ -51,7 +51,9 @@ class Credential(var account: String, var secretKey: String) {
 abstract class StorageClient {
 	def list(bucket: String, prefix: String) : List[String]
 	def get(bucket: String, objID: String) : (InputStream, java.util.Map[String,String])
-	def put(bucket: String, objID: String, objValue: InputStream)
+	def put(bucket: String, objID: String, 
+			objValue: InputStream, 
+			metaData: java.util.Map[String, String])
 	def del(bucket: String, objID: String)
 }
 
@@ -100,8 +102,10 @@ class S3Client(var credential: Credential, var region: String) extends StorageCl
 		(objectContent, metaData)
 	}
 
-	def put(bucket: String, objID: String, objectContent: InputStream) = {
-		s3Client.putObject(new PutObjectRequest(bucket, objID, objectContent, null))
+	def put(bucket: String, objID: String, objectContent: InputStream, metaData: java.util.Map[String, String]) = {
+		val objectMetaData = new ObjectMetadata()
+		objectMetaData.setUserMetadata(metaData)
+		s3Client.putObject(new PutObjectRequest(bucket, objID, objectContent, objectMetaData))
 	}
 
 	def del(bucket: String, objID: String) = {
@@ -142,7 +146,7 @@ class AzureClient(var credential: Credential) extends StorageClient {
 		(objectContent, metaData)
 	}
 
-	def put(bucket: String, objID: String, objectContent: InputStream) = {
+	def put(bucket: String, objID: String, objectContent: InputStream, metaData: java.util.Map[String, String]) = {
 		val containerClient = blobClient.getContainerReference(bucket)
 		val blob = containerClient.getBlockBlobReference(objID)
 

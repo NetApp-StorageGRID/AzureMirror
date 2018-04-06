@@ -73,7 +73,7 @@ object SyncBucket {
 
 		val destCredential = new Credential(cmConf.destAccount, cmConf.destSecretKey)
 		val destination = GetStorageClient.get(cmConf.destination, destCredential)
-		destination.put(cmConf.destBucket, obj, instream)
+		destination.put(cmConf.destBucket, obj, instream, metaData)
 	}
 	
 	/** Delete an object in the origin bucket. */
