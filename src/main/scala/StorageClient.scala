@@ -149,8 +149,14 @@ class AzureClient(var credential: Credential) extends StorageClient {
 	def put(bucket: String, objID: String, objectContent: InputStream, metaData: java.util.Map[String, String]) = {
 		val containerClient = blobClient.getContainerReference(bucket)
 		val blob = containerClient.getBlockBlobReference(objID)
+		val metaDataHashMap =  new java.util.HashMap[String, String](metaData)
 
+		// upload the blob object
 		blob.upload(objectContent, -1)
+
+		// upload the user defined metadata
+		blob.setMetadata(metaDataHashMap)
+		blob.uploadMetadata()
 	}
 
 	def del(bucket: String, objID: String) = {
