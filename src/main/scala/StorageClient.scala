@@ -53,7 +53,7 @@ abstract class StorageClient {
 	def get(bucket: String, objID: String) : (InputStream, java.util.Map[String,String])
 	def put(bucket: String, objID: String, 
 			objValue: InputStream, 
-			metaData: java.util.Map[String, String])
+			metaData: java.util.Map[String, String] = null)
 	def del(bucket: String, objID: String)
 }
 
