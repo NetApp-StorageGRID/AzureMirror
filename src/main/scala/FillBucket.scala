@@ -41,7 +41,7 @@ object FillBucket {
 		val objectsinCloud = storageClient.list(conf.bucket, prefix).length
 		val objectsToCreate = count - objectsinCloud
 		var metaData = new java.util.HashMap[String, String]()
-		metaData.put("x-amz-meta-creator", "netapp-magi")
+		metaData.put("creator", "netapp-magi")
 
 		println("[INFO]: fill() bucket=" + conf.bucket + ", objectsinCloud=" + 
 			objectsinCloud + ", objectsToCreate=" + objectsToCreate)
