@@ -40,8 +40,6 @@ object FillBucket {
 		val storageClient = GetStorageClient.get(conf.cloudEP, credential)
 		val objectsinCloud = storageClient.list(conf.bucket, prefix).length
 		val objectsToCreate = count - objectsinCloud
-		var metaData = new java.util.HashMap[String, String]()
-		metaData.put("creator", "netapp-magi")
 
 		println("[INFO]: fill() bucket=" + conf.bucket + ", objectsinCloud=" + 
 			objectsinCloud + ", objectsToCreate=" + objectsToCreate)
@@ -59,7 +57,7 @@ object FillBucket {
 		for (i <- 0 until objectsToCreate) {
 			val uuid = randomUUID.toString
 			val obj = prefix + uuid
-			storageClient.put(conf.bucket, obj, value, metaData)
+			storageClient.put(conf.bucket, obj, value)
 			objects += obj
 			value.reset
 		}
