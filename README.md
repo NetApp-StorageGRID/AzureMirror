@@ -18,15 +18,15 @@ to replicate or migrate objects between a StorageGrid system and Microsoft Azure
 	Populate a bucket with objects 
 
 ## Software ##
-* Spark-2.1.0-bin-hadoop2.7
-* aws-java-sdk-1.11.84.jar  
-	Available at: https://github.com/NTAP/magi/releases/download/1.0/aws-java-sdk-1.11.84.jar  
+* Spark-2.3.0-bin-hadoop2.7
+* aws-java-sdk-1.11.319.jar  
+	Available at: https://github.com/NTAP/magi/releases/download/1.2/aws-java-sdk-1.11.319.jar  
 	More recent versions are available at: https://aws.amazon.com/sdk-for-java/
-* azure-storage-5.0.0.jar  
-	Available at: https://github.com/NTAP/magi/releases/download/1.0/azure-storage-5.0.0.jar  
+* azure-storage-7.0.0.jar  
+	Available at: https://github.com/NTAP/magi/releases/download/1.2/azure-storage-7.0.0.jar  
 	More recent versions are available at: https://github.com/Azure/azure-storage-java
-* magi_2.11-1.0.jar  
-	Available at: https://github.com/NTAP/magi/releases/download/1.0/magi_2.11-1.0.jar
+* magi_2.11-1.2.jar  
+	Available at: https://github.com/NTAP/magi/releases/download/1.2/magi_2.11-1.2.jar
 
 ## How to compile from source code? ##
 1. Compile magi
@@ -34,7 +34,7 @@ to replicate or migrate objects between a StorageGrid system and Microsoft Azure
 $ git clone https://github.com/NTAP/magi.git  
 $ cd magi
 $ sbt package
-$ ls target/scala-2.11/magi_2.11-0.2.jar
+$ ls target/scala-2.11/magi_2.11-1.2.jar
 ~~~~
 
 The jar file is ready. 
