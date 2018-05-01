@@ -43,12 +43,12 @@ The jar file is ready.
 1. You need a spark cluster up and running, either at Microsoft Azure, AWS EC2 or your own data center. 
 2. Install the two Java SDK jars in your spark cluster (assume spark is installed at /usr/spark.).
 	~~~~
-	$ scp aws-java-sdk-1.11.84.jar each-spark-node:/usr/spark/jars
-	$ scp azure-storage-5.0.0.jar each-spark-node:/usr/spark/jars 
+	$ scp aws-java-sdk-1.11.319.jar each-spark-node:/usr/spark/jars
+	$ scp azure-storage-7.0.0.jar each-spark-node:/usr/spark/jars 
 	~~~~
 3. Copy the magi jar file to the spark master node.
 	~~~~
-	$ scp target/scala-2.11/magi_2.11-1.0.jar spark-master-node:~/
+	$ scp target/scala-2.11/magi_2.11-1.2.jar spark-master-node:~/
 	~~~~
 
 
@@ -89,7 +89,7 @@ The jar file is ready.
 2. Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class SyncBucket  ~/magi_2.11-0.2.jar --originBucket originbucket \
+	--class SyncBucket  ~/magi_2.11-1.2.jar --originBucket originbucket \
 	--destBucket destinationBucket > bucket-sync.log
 	~~~~
 
@@ -131,7 +131,7 @@ They share the same set of configuration parameters.
 * Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class EmptyBucket  ~/magi_2.11-0.2.jar --bucket bucket > bucket-empty.log
+	--class EmptyBucket  ~/magi_2.11-1.2.jar --bucket bucket > bucket-empty.log
 	~~~~
 
 #### List a bucket ####
@@ -144,7 +144,7 @@ They share the same set of configuration parameters.
 * Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class ListBucket  ~/magi_2.11-0.2.jar --bucket bucket > bucket-list.log
+	--class ListBucket  ~/magi_2.11-1.2.jar --bucket bucket > bucket-list.log
 	~~~~
 
 #### Fill a bucket ####
@@ -158,7 +158,7 @@ They share the same set of configuration parameters.
 * Submit the job
 	~~~~
 	$ /usr/spark/bin/spark-submit --master spark://spark-master-node-ip:7077 \
-	--class FillBucket  ~/magi_2.11-0.2.jar --bucket bucket \
+	--class FillBucket  ~/magi_2.11-1.2.jar --bucket bucket \
 	--size size --count 1000 > bucket-fill.log
 	~~~~
 
