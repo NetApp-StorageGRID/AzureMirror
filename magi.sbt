@@ -1,13 +1,13 @@
 name := "magi"
-version := "1.0"
-scalaVersion := "2.11.7"
+version := "1.2"
+scalaVersion := "2.11.11"
 
-// https://mvnrepository.com/artifact/org.apache.spark/spark-core_2.10
-libraryDependencies += "org.apache.spark" % "spark-core_2.10" % "2.1.0"
+// https://mvnrepository.com/artifact/org.apache.spark/spark-core
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.3.0" % Provided
 
 // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
 //libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.7.4"
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.11.84"
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.11.319"
 
 // https://mvnrepository.com/artifact/com.microsoft.azure/azure-storage
-libraryDependencies += "com.microsoft.azure" % "azure-storage" % "5.0.0"
+libraryDependencies += "com.microsoft.azure" % "azure-storage" % "7.0.0"
